@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://user:password@localhost:5432/safesim"
+}
+
+model Contract {
+  address      String
+  network      String
+  abi          Json
+  name         String? 
+  verified     Boolean  @default(false)
+  riskScore    Int?
+  lastUpdated  DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  simulations Simulation[]
+
+  @@id([address, network])
+  @@index([riskScore])
+}
+
+model Simulation {
+  id              String   @id @default(uuid())
+  userAddress     String
+  contractAddress String
+  network         String
+  functionName    String
+  params          Json
+  result          Json
+  timestamp       DateTime @default(now())
+
+  contract Contract @relation(fields: [contractAddress, network], references: [address, network])
+
+  @@index([userAddress])
+  @@index([contractAddress, network])
+  // Function name search is supported via fullTextSearch preview feature or standard contains filtering
+}
+
+model ScamPattern {
+  id          String @id @default(uuid())
+  patternHash String @unique
+  description String
+  severity    String // low, medium, high, critical
+}
+
+model WhitelistedContract {
+  address String
+  network String
+  reason  String
+
+  @@id([address, network])
+}
