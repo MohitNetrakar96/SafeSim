@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+// Initialize Stripe (checking if key exists)
+if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+    console.warn('VITE_STRIPE_PUBLISHABLE_KEY is missing');
+}
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 

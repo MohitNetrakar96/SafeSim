@@ -24,14 +24,14 @@ export function TransactionSimulator({
     const {
         mutate: simulate,
         data: simulationResult,
-        isLoading: isSimulating,
+        isPending: isSimulating,
         error: simulationError,
     } = useSimulateTransaction();
 
     const {
         mutate: assessRisk,
         data: riskData,
-        isLoading: isAssessing,
+        isPending: isAssessing,
         error: riskError,
     } = useRiskAssessment();
 

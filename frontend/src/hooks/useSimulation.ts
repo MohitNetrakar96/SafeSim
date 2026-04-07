@@ -1,9 +1,9 @@
-import { useQuery, useMutation, UseQueryOptions } from '@tanstack/react-query';
-import {
-    simulationService,
+import { useQuery, useMutation } from '@tanstack/react-query';
+import type { UseQueryOptions } from '@tanstack/react-query';
+import { simulationService } from '../services/simulationService';
+import type {
     DecodeTransactionRequest,
     SimulationRequest,
-    RiskAssessmentResponse,
     ContractInfo,
 } from '../services/simulationService';
 
